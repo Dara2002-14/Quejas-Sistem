@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Detalle de Queja - Sistema de Quejas</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+
+<header>
+    <div class="logo">Sistema de Quejas</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="my-complaints.html">Mis Quejas</a>
+        <a href="create-complaint.html">Crear Queja</a>
+        <a href="profile.html">Mi Perfil</a>
+        <a href="admin-dashboard.html">Admin</a>
+        <a href="#" onclick="logout()">Salir</a>
+    </nav>
+</header>
+
+        <div class="container">
+            <div class="card" id="detail-container">
+                <h2>Detalle de la queja</h2>
+                <p class="muted">Cargando información...</p>
+            </div>
+        </div>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/complaints.js"></script>
+        <script>
+            requireAuth();
+            loadComplaintDetail();
+        </script>
+    </body>
+    </html>

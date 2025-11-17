@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Crear Queja - Sistema de Quejas</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+
+<header>
+    <div class="logo">Sistema de Quejas</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="my-complaints.html">Mis Quejas</a>
+        <a href="create-complaint.html">Crear Queja</a>
+        <a href="profile.html">Mi Perfil</a>
+        <a href="admin-dashboard.html">Admin</a>
+        <a href="#" onclick="logout()">Salir</a>
+    </nav>
+</header>
+
+        <div class="container">
+            <div class="card">
+                <h2>Registrar nueva queja</h2>
+                <label for="title">Título</label>
+                <input id="title" type="text" placeholder="Ej: Ruido excesivo en la noche">
+                <label for="description">Descripción</label>
+                <textarea id="description" placeholder="Describe el problema con detalle"></textarea>
+                <button class="btn" onclick="createComplaint()">Enviar queja</button>
+                <p class="muted" id="create-message"></p>
+            </div>
+        </div>
+        <script src="js/api.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/complaints.js"></script>
+        <script>
+            requireAuth();
+        </script>
+    </body>
+    </html>

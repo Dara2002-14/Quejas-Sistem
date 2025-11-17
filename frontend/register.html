@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - Sistema de Quejas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Crear cuenta</h2>
+            <label for="reg_username">Usuario</label>
+            <input id="reg_username" type="text" placeholder="Ej: juan">
+            <label for="reg_email">Correo</label>
+            <input id="reg_email" type="email" placeholder="juan@example.com">
+            <label for="reg_password">Contraseña</label>
+            <input id="reg_password" type="password" placeholder="••••••••">
+            <button class="btn" onclick="registerUser()">Registrarme</button>
+            <p class="muted" style="margin-top: 10px;">
+                ¿Ya tienes cuenta?
+                <a class="link" href="login.html">Inicia sesión</a>
+            </p>
+        </div>
+    </div>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        if (getToken()) { window.location.href = 'index.html'; }
+    </script>
+</body>
+</html>

@@ -1,6 +1,8 @@
 // URL del backend Flask
 export const API_URL = "http://127.0.0.1:5001";
 
+// También hacer disponible globalmente
+window.API_URL_UTILS = API_URL;
 
 // Obtener token de sesión
 export function getToken() {
@@ -12,6 +14,10 @@ export function getCurrentUser() {
     const u = localStorage.getItem("user");
     return u ? JSON.parse(u) : null;
 }
+
+// Hacer funciones disponibles globalmente para scripts no-module
+window.getToken = getToken;
+window.getCurrentUser = getCurrentUser;
 
 // Headers con token
 export function authHeader() {

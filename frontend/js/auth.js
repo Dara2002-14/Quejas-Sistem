@@ -1,13 +1,34 @@
+// Usar API_URL de api.js (debe estar cargado antes)
+// Si no está definido, usar el valor por defecto
+const API_URL = window.API_URL || "http://127.0.0.1:5001/api";
+
+// Función helper para obtener token de forma segura
+function getTokenSafe() {
+    if (window.getToken) {
+        return window.getToken();
+    }
+    return localStorage.getItem("token");
+}
+
+// Función helper para obtener usuario de forma segura
+function getCurrentUserSafe() {
+    if (window.getCurrentUser) {
+        return window.getCurrentUser();
+    }
+    const u = localStorage.getItem("user");
+    return u ? JSON.parse(u) : null;
+}
+
 // Requiere que el usuario esté logueado, si no redirige a login
 function requireAuth() {
-    if (!getToken()) {
+    if (!getTokenSafe()) {
         window.location.href = "login.html";
     }
 }
 
 // Requiere que usuario sea admin
 function requireAdmin() {
-    const user = getCurrentUser();
+    const user = getCurrentUserSafe();
     const label = document.getElementById("admin-role-label");
     if (label && user) label.innerText = user.role || "(desconocido)";
     if (!user || user.role !== "admin") {
@@ -26,7 +47,7 @@ async function login() {
     }
 
     try {
-        const res = await fetch(API_URL + "/api/auth/login", {
+        const res = await fetch(`${API_URL}/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password })
@@ -43,7 +64,8 @@ async function login() {
         localStorage.setItem("user", JSON.stringify(data.user));
         window.location.href = "index.html";
     } catch (err) {
-        alert("No se pudo conectar con el servidor.");
+        console.error("Error de conexión:", err);
+        alert("No se pudo conectar con el servidor. Verifica que el backend esté corriendo.");
     }
 }
 
@@ -58,7 +80,7 @@ async function registerUser() {
     }
 
     try {
-        const res = await fetch(API_URL + "/api/auth/register", {
+        const res = await fetch(`${API_URL}/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })
@@ -74,12 +96,21 @@ async function registerUser() {
         alert("Cuenta creada. Ahora inicia sesión.");
         window.location.href = "login.html";
     } catch (err) {
-        alert("No se pudo conectar con el servidor.");
+        console.error("Error de conexión:", err);
+        alert("No se pudo conectar con el servidor. Verifica que el backend esté corriendo.");
     }
 }
 
+// Hacer funciones disponibles globalmente
+window.login = login;
+window.registerUser = registerUser;
+window.requireAuth = requireAuth;
+window.requireAdmin = requireAdmin;
+window.logout = logout;
+window.loadProfile = loadProfile;
+
 function loadProfile() {
-    const user = getCurrentUser();
+    const user = getCurrentUserSafe();
     const el = document.getElementById("profile-info");
     if (!user || !el) return;
 

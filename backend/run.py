@@ -65,7 +65,19 @@ def create_app(config_class=Config):
 app = create_app()
 
 
+def init_db():
+    """Inicializar la base de datos si no existe"""
+    with app.app_context():
+        # Crear todas las tablas si no existen
+        db.create_all()
+        print("✅ Base de datos inicializada")
+
+
 if __name__ == "__main__":
+    # Inicializar base de datos al iniciar
+    init_db()
+    print("\n🚀 Servidor iniciado en http://0.0.0.0:5001")
+    print("📝 API disponible en http://127.0.0.1:5001/api\n")
     app.run(debug=True, host='0.0.0.0', port=5001)
 
 

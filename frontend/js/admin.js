@@ -1,25 +1,29 @@
-import { API_URL, apiGet } from "./api.js";
-import { getToken, requireAdmin } from "./utils.js";
+// Usar API_URL y funciones globales (mismo patrón que otros archivos)
+const API_URL_ADMIN = window.API_URL || "http://127.0.0.1:5001/api";
+
+function getAuthHeader() {
+    const token = window.getToken ? window.getToken() : localStorage.getItem("token");
+    return {
+        "Content-Type": "application/json",
+        "Authorization": token ? `Bearer ${token}` : ""
+    };
+}
 
 // Ejecutar al abrir la página
 document.addEventListener("DOMContentLoaded", () => {
-    requireAdmin();   // Evita que usuarios normales entren aquí
     loadAllComplaintsAdmin();
 });
 
 async function loadAllComplaintsAdmin() {
     const el = document.getElementById("admin-complaints");
-    const token = getToken();
+    if (!el) return;
 
     el.innerHTML = `<div class="loading">Cargando...</div>`;
 
     try {
-        const res = await fetch(`${API_URL}/complaints/all`, {
+        const res = await fetch(`${API_URL_ADMIN}/complaints/all`, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
+            headers: getAuthHeader()
         });
 
         const data = await res.json();
@@ -32,13 +36,16 @@ async function loadAllComplaintsAdmin() {
             return;
         }
 
-        if (!Array.isArray(data) || data.length === 0) {
+        // El backend devuelve {complaints: [...], count: ...}
+        const complaints = data.complaints || (Array.isArray(data) ? data : []);
+
+        if (!Array.isArray(complaints) || complaints.length === 0) {
             el.innerHTML = `<div class="list-empty">No hay quejas registradas.</div>`;
             return;
         }
 
         let html = "";
-        data.forEach(c => {
+        complaints.forEach(c => {
             html += `
                 <div class="card complaint-card">
                     <h3>${c.title}</h3>
@@ -60,6 +67,10 @@ async function loadAllComplaintsAdmin() {
         el.innerHTML = html;
 
     } catch (err) {
-        el.innerHTML = `<div class="list-empty">No se pudo conectar con el servidor.</div>`;
+        console.error("Error al cargar quejas:", err);
+        el.innerHTML = `<div class="list-empty">No se pudo conectar con el servidor. Verifica que el backend esté corriendo.</div>`;
     }
 }
+
+// Hacer función disponible globalmente
+window.loadAllComplaintsAdmin = loadAllComplaintsAdmin;

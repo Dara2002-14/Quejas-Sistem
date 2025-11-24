@@ -180,3 +180,45 @@ def create_admin():
             'error': 'Error al crear administrador',
             'details': str(e)
         }), 500
+
+
+@auth_bp.route('/make-admin', methods=['POST'])
+def make_admin():
+    """Convertir un usuario existente en administrador (solo para desarrollo)"""
+    try:
+        data = request.get_json() or {}
+        username = data.get('username', '').strip()
+        email = data.get('email', '').strip()
+
+        if not username and not email:
+            return jsonify({
+                'error': 'Debes proporcionar username o email'
+            }), 400
+
+        # Buscar usuario por username o email
+        user = None
+        if username:
+            user = User.query.filter_by(username=username).first()
+        if not user and email:
+            user = User.query.filter_by(email=email).first()
+
+        if not user:
+            return jsonify({
+                'error': 'Usuario no encontrado'
+            }), 404
+
+        # Convertir a admin
+        user.role = 'admin'
+        db.session.commit()
+
+        return jsonify({
+            'message': f'Usuario {user.username} ahora es administrador',
+            'user': user.to_dict()
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            'error': 'Error al convertir usuario en admin',
+            'details': str(e)
+        }), 500

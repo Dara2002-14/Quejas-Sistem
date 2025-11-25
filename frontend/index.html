@@ -1,48 +1,89 @@
 <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Home - Sistema de Quejas</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Sistema de Quejas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="home-body">
 
-<header>
-    <div class="logo">Sistema de Quejas</div>
+<header class="navbar">
+    <div class="logo">
+        <img src="Logo2.png" alt="Logo UNADECA" class="logo-img">
+        Sistema de Quejas
+    </div>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="my-complaints.html">Mis Quejas</a>
-        <a href="create-complaint.html">Crear Queja</a>
-        <a href="profile.html">Mi Perfil</a>
-        <a href="admin-dashboard.html">Admin</a>
-        <a href="#" onclick="logout()">Salir</a>
+        <a href="index.html" class="zoom-link">Home</a>
+        <a href="my-complaints.html" class="zoom-link">Mis Quejas</a>
+        <a href="create-complaint.html" class="zoom-link">Crear Queja</a>
+        <a href="profile.html" class="zoom-link">Mi Perfil</a>
+        <a href="admin-dashboard.html" class="zoom-link">Admin</a>
+        <a href="#" class="zoom-link" onclick="logout()">Salir</a>
     </nav>
 </header>
 
-        <div class="container">
-            <div class="card">
-                <h1>Bienvenido 👋</h1>
-                <p>
-                    Este es tu sistema de quejas. Aquí puedes:
-                </p>
-                <ul>
-                    <li>Registrar nuevas quejas</li>
-                    <li>Ver el estado y seguimiento de tus quejas</li>
-                    <li>Revisar tu perfil</li>
-                </ul>
-                <p class="muted">
-                    Si no has iniciado sesión, serás redirigido automáticamente al login.
-                </p>
-                <button class="btn" onclick="window.location.href='create-complaint.html'">
-                    Registrar una queja
-                </button>
-            </div>
+
+<main class="hero">
+    <img src="UNADECA_Logo.png" alt="">
+    <p class="subtitle">Escríbalo, no lo diga</p>
+
+    <div class="btn-group">
+        <a href="login.html" class="btn zoom-btn">Log In</a>
+        <a href="register.html" class="btn zoom-btn">Sign Up</a>
+        <a href="admin-login.html" class="btn zoom-btn">Administrador</a>
+    </div>
+</main>
+
+<!-- ABOUT US SECTION -->
+<section class="aboutus-home">
+    <div class="aboutus-card">
+        <h2>About Us</h2>
+        <p class="about-text">
+            En UNADECA trabajamos con excelencia para ofrecer una educación de calidad,
+            enfocada en el crecimiento académico, personal y espiritual de cada estudiante.
+            Nuestro compromiso es formar líderes íntegros que impacten positivamente a nivel global.
+        </p>
+ </div>
+</section>
+
+<section class="motivos-section">
+    <h3 class="motivos-title">5 motivos para escoger UNADECA</h3>
+
+    <div class="motivos-grid">
+        <div class="motivo-card">
+            <span class="motivo-num">1</span>
+            <p>Comprometidos con tu desarrollo</p>
         </div>
-        <script src="js/api.js"></script>
-        <script src="js/auth.js"></script>
-        <script>
-            // Proteger página: requiere login
-            requireAuth();
-        </script>
-    </body>
-    </html>
+
+        <div class="motivo-card">
+            <span class="motivo-num">2</span>
+            <p>Una vibrante vida estudiantil</p>
+        </div>
+
+        <div class="motivo-card">
+            <span class="motivo-num">3</span>
+            <p>Entorno natural con el mejor campus de Alajuela</p>
+        </div>
+
+        <div class="motivo-card">
+            <span class="motivo-num">4</span>
+            <p>Egresados destacados en 5 continentes</p>
+        </div>
+
+        <div class="motivo-card">
+            <span class="motivo-num">5</span>
+            <p>Maestros dedicados a inspirar y motivar</p>
+        </div>
+    </div>
+</section>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script>
+    requireAuth();
+</script>
+
+</body>
+</html>
+

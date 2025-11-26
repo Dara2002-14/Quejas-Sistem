@@ -524,7 +524,7 @@ nav a[href*=".html"]::after {
 .login-title {
     font-size: 28px;
     font-weight: 700;
-    color: white; /* Si tu fondo es azul oscuro */
+    color: white;
     margin-top: 10px;
 }
 
